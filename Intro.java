@@ -45,7 +45,7 @@ public class Intro {
 	public static int coins(int n){
 		int coinAmount = 0;
 		
-		while (n!=0) {
+		while (n>0) {
 			
 			if ((n>=5)&&(n-5>1)) {
 				n=n-5;
