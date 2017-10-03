@@ -1,25 +1,20 @@
-import java.awt.event.KeyEvent;
 
-public class Player {
-	Board gameBoard;
+public class Player{
+	static boolean turn = true;
 	int posX;
 	int posY;
 
-	public Player(Board gameBoard) {
-		this.gameBoard = gameBoard;
+	public Player() {
+
 	}
 	
-	public  void setPos(int posX, int posY) {
-		this.posX = posX;
-		this.posY = posY;
+	public void setPos(int Y, int X) {
+		this.posX = X;
+		this.posY = Y;
 	}
 	
-	public void playerMove(KeyEvent e) {
+	public void checkMove() {
 		
 	}
 	
-	public void moveUp() {
-		posY++;
-	}
-
 }
