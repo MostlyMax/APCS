@@ -4,24 +4,31 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 public class Game{
+	private Board gameBoard;
+	private Player player;
+	private JFrame f;
 	
-	public void game(JFrame f){
-		Board gameBoard = new Board();
-		Player player = new Player();
+	public Game(JFrame f) {
+		this.f = f;
+	}
+	
+	public void game(){
+		gameBoard = new Board();
+		player = new Player();
 		gameBoard.createPlayer(player);
 		
-		Board.showBoard();
+		gameBoard.showBoard();
+		// clear old keylisteners if needed 
+		KeyListener[] keyListeners = f.getKeyListeners();
+		if (keyListeners.length != 0) f.removeKeyListener(keyListeners[0]);
 		
 		f.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 			}
 			
 			public void keyPressed(KeyEvent e) {
-				if (Player.turn) {
-					//Player.turn = false;
 					switch (e.getKeyCode()) {
 						case KeyEvent.VK_W:
-							if(checkMove('W', player))
 							move('W', player);
 							break;
 						case KeyEvent.VK_A:
@@ -45,71 +52,88 @@ public class Game{
 						case KeyEvent.VK_X:
 							move('X', player);
 							break;	
+						case KeyEvent.VK_SPACE:
+							if (player.isDead()) {
+								reset(f);
+							}
+							break;	
 					}
-				}
 			}
 			
-			private boolean checkMove(char input, Player player) {
-				// TODO Auto-generated method stub
-				return true;
-			}
-
 			public void keyReleased(KeyEvent e) {
 			}
 		});
 			
 	}
 	
-	public void move(char input, Player player) {
-		Board.gameBoard[player.posY][player.posX] = 0;
+	public void reset(JFrame f) {
+		player = null;
+		gameBoard = null;
 		
+		
+//		for (int i = 0; i<12; i++) {
+//			for (int j = 0; j<12; j++) {
+//				gameBoard.getGameBoard()[i][j] = 0;
+//			}
+//		}
+		
+		game();
+		
+	}
+				
+	public void move(char input, Player player) {
+		gameBoard.getGameBoard()[player.posY][player.posX] = 0;
+		
+		if (player.dead) return; 
 		switch (input) {
 			case 'W':
+				if (gameBoard.getGameBoard()[player.posY-1][player.posX] != 0) player.death();
 				player.setPos(player.posY-1, player.posX);
-				Board.gameBoard[player.posY][player.posX] = 1;
-				System.out.println('w');
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
+				//System.out.println('w');
 				//update();
 				break;
 			case 'A':
+				if (gameBoard.getGameBoard()[player.posY][player.posX-1] != 0) player.death();
 				player.setPos(player.posY, player.posX-1);
-				Board.gameBoard[player.posY][player.posX] = 1;
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'S':
+				if (gameBoard.getGameBoard()[player.posY+1][player.posX] != 0) player.death();
 				player.setPos(player.posY+1, player.posX);
-				Board.gameBoard[player.posY][player.posX] = 1;
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'D':
+				if (gameBoard.getGameBoard()[player.posY][player.posX+1] != 0) player.death();
 				player.setPos(player.posY, player.posX+1);
-				Board.gameBoard[player.posY][player.posX] = 1;
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'Q':
+				if (gameBoard.getGameBoard()[player.posY-1][player.posX-1] != 0) player.death();
 				player.setPos(player.posY-1, player.posX-1);
-				Board.gameBoard[player.posY][player.posX] = 1;
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'E':
+				if (gameBoard.getGameBoard()[player.posY-1][player.posX+1] != 0) player.death();
 				player.setPos(player.posY-1, player.posX+1);
-				Board.gameBoard[player.posY][player.posX] = 1;
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'Z':
+				if (gameBoard.getGameBoard()[player.posY+1][player.posX-1] != 0) player.death();
 				player.setPos(player.posY+1, player.posX-1);
-				Board.gameBoard[player.posY][player.posX] = 1;
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'X':
-				player.setPos(player.posY+1, player.posY+1);
-				Board.gameBoard[player.posY][player.posX] = 1;
+				if (gameBoard.getGameBoard()[player.posY+1][player.posX+1] != 0) player.death();
+				player.setPos(player.posY+1, player.posX+1);
+				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 		}
 		
-		Board.showBoard();
+		gameBoard.showBoard();
 		
 		//move mhos
 
-	}
-	
-
-	private void update() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public static void main(String[] args) {
@@ -118,8 +142,8 @@ public class Game{
 			f.setSize(250, 250);
 			f.setVisible(true);
 			
-			Game hivolts = new Game();
-			hivolts.game(f);
+			Game hivolts = new Game(f);
+			hivolts.game();
 			
 
 	}

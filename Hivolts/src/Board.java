@@ -1,6 +1,6 @@
 
 public class Board {
-	static int[][] gameBoard = new int[12][12];
+	private int[][] gameBoard = new int[12][12];
 	
 	public Board() {
 		createBorder();
@@ -88,13 +88,17 @@ public class Board {
 		return retVal;
 	}
 	
-	public static void showBoard() {
+	public void showBoard() {
 		for(int i=0; i<12; i++) {
 			for (int j = 0; j<12; j++) {
 				System.out.print(gameBoard[i][j]+" ");
 			}
 			System.out.println();
 		}
+	}
+
+	public int[][] getGameBoard() {
+		return gameBoard;
 	}
 	
 	
