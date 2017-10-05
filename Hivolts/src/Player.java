@@ -2,6 +2,7 @@ public class Player{
 	int posX;
 	int posY;
 	boolean dead = false;
+	boolean turn = true;
 
 	public boolean isDead() {
 		return dead;
@@ -16,10 +17,6 @@ public class Player{
 		this.posY = Y;
 	}
 	
-	public void checkMove() {
-		
-	}
-
 	public void death() {
 		System.out.println("You died!");
 		System.out.println("Press 'space' to play again");

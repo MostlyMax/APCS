@@ -1,6 +1,6 @@
-
 public class Board {
 	private int[][] gameBoard = new int[12][12];
+	Mho[] mhos = new Mho[12];
 	
 	public Board() {
 		createBorder();
@@ -38,7 +38,9 @@ public class Board {
 				//System.out.println(cord2);
 			}
 			
+			mhos[i] = new Mho(cord1, cord2);
 			gameBoard[cord1][cord2] = 2;
+			
 		}
 		
 	}
@@ -99,6 +101,10 @@ public class Board {
 
 	public int[][] getGameBoard() {
 		return gameBoard;
+	}
+	
+	public Mho[] getMhoList() {
+		return mhos;
 	}
 	
 	
