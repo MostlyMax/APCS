@@ -20,6 +20,7 @@ public class Player{
 	public void death() {
 		System.out.println("You died!");
 		System.out.println("Press 'space' to play again");
+		turn = false;
 		dead = true;
 		//System.exit(0);
 	}

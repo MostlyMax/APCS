@@ -1,3 +1,5 @@
+import javax.swing.JFrame;
+
 public class Board {
 	private int[][] gameBoard = new int[12][12];
 	Mho[] mhos = new Mho[12];
@@ -90,7 +92,7 @@ public class Board {
 		return retVal;
 	}
 	
-	public void showBoard() {
+	public void showBoard(JFrame f) {
 		for(int i=0; i<12; i++) {
 			for (int j = 0; j<12; j++) {
 				System.out.print(gameBoard[i][j]+" ");

@@ -17,7 +17,7 @@ public class Game{
 		player = new Player();
 		gameBoard.createPlayer(player);
 		
-		gameBoard.showBoard();
+		gameBoard.showBoard(f);
 		// clear old keylisteners if needed 
 		KeyListener[] keyListeners = f.getKeyListeners();
 		if (keyListeners.length != 0) f.removeKeyListener(keyListeners[0]);
@@ -111,10 +111,12 @@ public class Game{
 	}
 				
 	public void moveAllMhos() {
-		for (Mho mhoMove : gameBoard.getMhoList()) {
-			mhoMove.moveMho(gameBoard, player);
-		}
 		player.turn = true;
+		for (Mho mhoMove : gameBoard.getMhoList()) {
+			if (!(mhoMove.mhoDead)) mhoMove.moveMho(gameBoard, player);
+			gameBoard.showBoard(f);
+		}
+	
 	}
 	
 	public void move(char input, Player player) {
@@ -166,7 +168,7 @@ public class Game{
 				break;
 		}
 		
-		gameBoard.showBoard();
+		gameBoard.showBoard(f);
 		
 		//move mhos
 
@@ -189,7 +191,7 @@ public class Game{
 		player.setPos(cord1, cord2);
 		gameBoard.getGameBoard()[cord1][cord2] = 1;
 		
-		gameBoard.showBoard();
+		gameBoard.showBoard(f);
 	}
 
 	public static void main(String[] args) {
