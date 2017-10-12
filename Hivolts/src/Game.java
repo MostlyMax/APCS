@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -17,7 +18,11 @@ public class Game{
 		player = new Player();
 		gameBoard.createPlayer(player);
 		
-		gameBoard.showBoard(f);
+		f.add(gameBoard);
+		f.getContentPane().setBackground(Color.WHITE);
+		f.setVisible(true);
+		
+		gameBoard.showBoard();
 		// clear old keylisteners if needed 
 		KeyListener[] keyListeners = f.getKeyListeners();
 		if (keyListeners.length != 0) f.removeKeyListener(keyListeners[0]);
@@ -105,6 +110,7 @@ public class Game{
 	public void reset() {
 		player = null;
 		gameBoard = null;
+		f.getContentPane().removeAll();
 		
 		game();
 		
@@ -115,7 +121,7 @@ public class Game{
 		//System.out.println("mhos");
 		for (Mho mhoMove : gameBoard.getMhoList()) {
 			if (!(mhoMove.mhoDead)) mhoMove.moveMho(gameBoard, player);
-			gameBoard.showBoard(f);
+			gameBoard.showBoard();
 		}
 		//gameBoard.showBoard(f);
 	}
@@ -169,7 +175,7 @@ public class Game{
 				break;
 		}
 		
-		gameBoard.showBoard(f);
+		gameBoard.showBoard();
 		
 		//move mhos
 
@@ -192,17 +198,18 @@ public class Game{
 		player.setPos(cord1, cord2);
 		gameBoard.getGameBoard()[cord1][cord2] = 1;
 		
-		gameBoard.showBoard(f);
+		gameBoard.showBoard();
 	}
 
 	public static void main(String[] args) {
 			JFrame f = new JFrame("Hivolts");
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			f.setSize(250, 250);
+			f.setSize(500, 500);
 			f.setVisible(true);
 			
 			Game hivolts = new Game(f);
 			hivolts.game();
+		
 			
 
 	}

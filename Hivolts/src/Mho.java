@@ -1,13 +1,19 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Mho {
 	static int mhoNum = 2;
 	int mhoX;
 	int mhoY;
 	boolean mhoDead = false;
-
+	static BufferedImage img;
+	
 	public Mho(int ycoord, int xcoord) {
 		this.mhoX = xcoord;
 		this.mhoY = ycoord;
+		setImage();
 	}
 
 	public void moveMho (Board b, Player player) {
@@ -128,4 +134,15 @@ public class Mho {
 		this.mhoDead = true;
 		
 	}
+	
+	public void setImage() {
+		try {
+		    img = ImageIO.read(new File("res/mho.png"));
+		} catch (IOException e) {
+		}
+	}
+	
+	public static BufferedImage getImage() {
+		return img;
+	}	
 }
