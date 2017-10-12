@@ -112,11 +112,12 @@ public class Game{
 				
 	public void moveAllMhos() {
 		player.turn = true;
+		//System.out.println("mhos");
 		for (Mho mhoMove : gameBoard.getMhoList()) {
 			if (!(mhoMove.mhoDead)) mhoMove.moveMho(gameBoard, player);
 			gameBoard.showBoard(f);
 		}
-	
+		//gameBoard.showBoard(f);
 	}
 	
 	public void move(char input, Player player) {

@@ -19,6 +19,15 @@ public class Mho {
 		int distX = Math.abs(playerX-mhoX);
 		int distY = Math.abs(playerY-mhoY);
 		
+		int closeX = 0;
+		int closeY = 0;
+		
+		if (playerX<mhoX) closeX = -1;
+		if (playerX>mhoX) closeX = 1;
+		if (playerY<mhoY) closeY = -1;
+		if (playerY>mhoY) closeY = 1;
+		
+		
 		b.getGameBoard()[mhoY][mhoX] = 0;
 
 		//first move vertical/horizontal if directly above/to the side
@@ -49,6 +58,56 @@ public class Mho {
 				mhoX--;
 			}
 		}
+		
+		else {
+			
+			boolean noMho = false;
+			boolean noFence = false;
+			
+			for (int i = 0; i<2; i++) {
+				if (i==2) noFence = true;
+				
+				if (i!=2) noFence = !(b.getGameBoard()[mhoY+closeY][mhoX+closeX]==3);
+				noMho = !(b.getGameBoard()[mhoY+closeY][mhoX+closeX]==2);
+				if (noFence) {
+					if (noMho) {
+						//System.out.println("diag");
+						//System.out.println(mhoX + " "+ mhoY);
+						if(checkPDeath(b, mhoX+closeX, mhoY+closeY)) player.death();
+						if(checkMDeath(b, mhoX+closeX, mhoY+closeY)) mhoDeath(b);
+						mhoX+=closeX;
+						mhoY+=closeY;
+						System.out.println(mhoX+" "+mhoY);
+						break;
+					}
+				}
+				
+				if (i!=2) noFence = !(b.getGameBoard()[mhoY][mhoX+closeX]==3);
+				noMho = !(b.getGameBoard()[mhoY][mhoX+closeX]==2);
+				if (noFence&&(distX>=distY)) {
+					if (noMho) {
+						//System.out.println("horizontal");
+						if(checkPDeath(b, mhoX+closeX, mhoY)) player.death();
+						if(checkMDeath(b, mhoX+closeX, mhoY)) mhoDeath(b);
+						mhoX+=closeX;
+						break;
+					}
+				}
+				
+				if (i!=2) noFence = !(b.getGameBoard()[mhoY+closeY][mhoX]==3);
+				noMho = !(b.getGameBoard()[mhoY+closeY][mhoX]==2);
+				if (noFence&&(distX<=distY)) {
+					if (noMho) {
+						if(checkPDeath(b, mhoX, mhoY+closeY)) player.death();
+						if(checkMDeath(b, mhoX, mhoY+closeY)) mhoDeath(b);
+						mhoY+=closeY;
+						break;
+					}
+				}
+						
+			}
+	
+		}		
 		
 		
 		b.getGameBoard()[mhoY][mhoX] = 2;
