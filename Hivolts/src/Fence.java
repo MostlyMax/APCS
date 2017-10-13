@@ -11,12 +11,16 @@ public class Fence {
 	public Fence() {
 		setImage();
 	}
+	
+	/**
+	 * Base image for fence
+	 */
 	public void setImage() {
 		try {
 		    img = ImageIO.read(new File("res/fence.png"));
 		} catch (IOException e) {
 		}
-		System.out.println("this worked");
+		//System.out.println("this worked");
 	}
 	
 	public static BufferedImage getImage() {

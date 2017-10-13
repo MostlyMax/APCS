@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
@@ -13,8 +14,11 @@ public class Game{
 		this.f = f;
 	}
 	
+	/**
+	 * Main key listener/game loop
+	 */
 	public void game(){
-		gameBoard = new Board();
+		gameBoard = new Board(f);
 		player = new Player();
 		gameBoard.createPlayer(player);
 		
@@ -47,7 +51,7 @@ public class Game{
 								moveAllMhos();
 							}
 							break;
-						case KeyEvent.VK_S:
+						case KeyEvent.VK_X:
 							move('S', player);
 							if(player.turn) {
 								player.turn = false;
@@ -82,13 +86,19 @@ public class Game{
 								moveAllMhos();
 							}
 							break;	
-						case KeyEvent.VK_X:
+						case KeyEvent.VK_C:
 							move('X', player);
 							if(player.turn) {
 								player.turn = false;
 								moveAllMhos();
 							}
-							break;	
+							break;
+						case KeyEvent.VK_S:
+							if(player.turn) {
+								player.turn = false;
+								moveAllMhos();
+							}
+							break;
 						case KeyEvent.VK_J:
 							jump(player);
 							break;
@@ -107,6 +117,9 @@ public class Game{
 			
 	}
 	
+	/**
+	 * resets game
+	 */
 	public void reset() {
 		player = null;
 		gameBoard = null;
@@ -115,61 +128,71 @@ public class Game{
 		game();
 		
 	}
-				
+	
+	/**
+	 * calculates movements for all mhos
+	 */
 	public void moveAllMhos() {
 		player.turn = true;
 		//System.out.println("mhos");
 		for (Mho mhoMove : gameBoard.getMhoList()) {
+			System.out.println("ping");
 			if (!(mhoMove.mhoDead)) mhoMove.moveMho(gameBoard, player);
 			gameBoard.showBoard();
+			
 		}
 		//gameBoard.showBoard(f);
 	}
 	
+	/**
+	 * Moves player
+	 * @param input
+	 * @param player
+	 */
 	public void move(char input, Player player) {
 		gameBoard.getGameBoard()[player.posY][player.posX] = 0;
 		
 		if (player.dead||!(player.turn)) return; 
 		switch (input) {
 			case 'W':
-				if (gameBoard.getGameBoard()[player.posY-1][player.posX] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY-1][player.posX] != 0) player.death(f);
 				player.setPos(player.posY-1, player.posX);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				//System.out.println('w');
 				//update();
 				break;
 			case 'A':
-				if (gameBoard.getGameBoard()[player.posY][player.posX-1] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY][player.posX-1] != 0) player.death(f);
 				player.setPos(player.posY, player.posX-1);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'S':
-				if (gameBoard.getGameBoard()[player.posY+1][player.posX] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY+1][player.posX] != 0) player.death(f);
 				player.setPos(player.posY+1, player.posX);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'D':
-				if (gameBoard.getGameBoard()[player.posY][player.posX+1] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY][player.posX+1] != 0) player.death(f);
 				player.setPos(player.posY, player.posX+1);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'Q':
-				if (gameBoard.getGameBoard()[player.posY-1][player.posX-1] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY-1][player.posX-1] != 0) player.death(f);
 				player.setPos(player.posY-1, player.posX-1);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'E':
-				if (gameBoard.getGameBoard()[player.posY-1][player.posX+1] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY-1][player.posX+1] != 0) player.death(f);
 				player.setPos(player.posY-1, player.posX+1);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'Z':
-				if (gameBoard.getGameBoard()[player.posY+1][player.posX-1] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY+1][player.posX-1] != 0) player.death(f);
 				player.setPos(player.posY+1, player.posX-1);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
 			case 'X':
-				if (gameBoard.getGameBoard()[player.posY+1][player.posX+1] != 0) player.death();
+				if (gameBoard.getGameBoard()[player.posY+1][player.posX+1] != 0) player.death(f);
 				player.setPos(player.posY+1, player.posX+1);
 				gameBoard.getGameBoard()[player.posY][player.posX] = 1;
 				break;
@@ -181,6 +204,10 @@ public class Game{
 
 	}
 	
+	/**
+	 * calculates jump for player
+	 * @param player
+	 */
 	public void jump(Player player) {
 		gameBoard.getGameBoard()[player.posY][player.posX] = 0;
 		int cord1 = 0, cord2 = 0;
@@ -191,20 +218,21 @@ public class Game{
 			cord2 = Board.getRand(1, 12);
 		}
 		
-		System.out.println(cord1);
-		System.out.println(cord1);
+		//System.out.println(cord1);
+		//System.out.println(cord1);
 		
-		if (gameBoard.getGameBoard()[cord1][cord2] != 0) player.death();
+		if (gameBoard.getGameBoard()[cord1][cord2] != 0) player.death(f);
 		player.setPos(cord1, cord2);
 		gameBoard.getGameBoard()[cord1][cord2] = 1;
 		
 		gameBoard.showBoard();
 	}
 
+	
 	public static void main(String[] args) {
 			JFrame f = new JFrame("Hivolts");
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			f.setSize(500, 500);
+			f.setSize(425, 500);
 			f.setVisible(true);
 			
 			Game hivolts = new Game(f);
