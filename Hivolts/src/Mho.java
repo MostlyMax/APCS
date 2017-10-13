@@ -124,7 +124,7 @@ public class Mho {
 		}		
 		
 		
-		b.getGameBoard()[mhoY][mhoX] = 2;
+		if (!(this.mhoDead == true)) b.getGameBoard()[mhoY][mhoX] = 2;
 	}
 	
 	/**
@@ -147,7 +147,7 @@ public class Mho {
 	 * @return
 	 */
 	public boolean checkMDeath(Board b, int x, int y) {
-		if (b.getGameBoard()[y][x]==3) {setImageDead(); return true;}
+		if (b.getGameBoard()[y][x]==3) {setImageDead(); mhoDead = true; return true;}
 		else return false;
 	}
 	

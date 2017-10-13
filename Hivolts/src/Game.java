@@ -134,14 +134,19 @@ public class Game{
 	 */
 	public void moveAllMhos() {
 		player.turn = true;
+		int deadMhos = 0;
 		//System.out.println("mhos");
 		for (Mho mhoMove : gameBoard.getMhoList()) {
 			//System.out.println("ping");
 			if (!(mhoMove.mhoDead)) mhoMove.moveMho(gameBoard, player);
+			if (mhoMove.mhoDead) deadMhos++;
 			gameBoard.showBoard();
 			
 		}
-		//gameBoard.showBoard(f);
+		if (deadMhos==12) {
+			player.win = true;
+			player.death(f);
+		}
 	}
 	
 	/**
@@ -221,7 +226,10 @@ public class Game{
 		//System.out.println(cord1);
 		//System.out.println(cord1);
 		
-		if (gameBoard.getGameBoard()[cord1][cord2] != 0) player.death(f);
+		if (gameBoard.getGameBoard()[cord1][cord2] != 0) {
+			player.death(f);
+			
+		}
 		player.setPos(cord1, cord2);
 		gameBoard.getGameBoard()[cord1][cord2] = 1;
 		

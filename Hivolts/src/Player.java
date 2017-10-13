@@ -14,6 +14,7 @@ public class Player{
 	int posY;
 	boolean dead = false;
 	boolean turn = true;
+	boolean win = false;
 	static BufferedImage img;
 
 	public boolean isDead() {
@@ -34,11 +35,18 @@ public class Player{
 	 * @param f
 	 */
 	public void death(JFrame f) {
-		setImageDead();
+		
 		
 		JPanel panel = new JPanel();
+		JLabel die = new JLabel();
 		
-		JLabel die = new JLabel("You Died!"); 
+		if (win == true) {
+			die.setText("You Win!");
+		}
+		else {
+			die.setText("You Died!");
+			setImageDead();
+		}
 		JLabel again = new JLabel("Press SPACE to play again");
 		die.setHorizontalTextPosition(JLabel.CENTER);
 		again.setHorizontalTextPosition(JLabel.CENTER);
@@ -51,7 +59,7 @@ public class Player{
 		
 		panel.setBackground(Color.WHITE);
 		
-		f.add(panel);
+		f.add(panel);	
 		f.setVisible(true);
 		//System.out.println("You died!");
 		//f.add
