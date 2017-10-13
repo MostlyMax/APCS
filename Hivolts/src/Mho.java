@@ -91,7 +91,7 @@ public class Mho {
 						if(checkMDeath(b, mhoX+closeX, mhoY+closeY)) mhoDeath(b);
 						mhoX+=closeX;
 						mhoY+=closeY;
-						System.out.println(mhoX+" "+mhoY);
+						//System.out.println(mhoX+" "+mhoY);
 						break;
 					}
 				}

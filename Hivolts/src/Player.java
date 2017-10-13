@@ -53,9 +53,9 @@ public class Player{
 		
 		f.add(panel);
 		f.setVisible(true);
-		System.out.println("You died!");
+		//System.out.println("You died!");
 		//f.add
-		System.out.println("Press 'space' to play again");
+		//System.out.println("Press 'space' to play again");
 		
 		turn = false;
 		dead = true;

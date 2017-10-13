@@ -147,7 +147,7 @@ public class Board extends JComponent{
 	 * @param g
 	 */
 	void drawThings(Graphics g) {
-		System.out.println("gl");
+		//System.out.println("gl");
 		for (int row = 0; row < 12; row++) {
 			for (int col = 0; col < 12; col++) {
 				//draw picture with size Cell_Height, Cell_Width
@@ -178,7 +178,7 @@ public class Board extends JComponent{
 	 * @param g
 	 */
 	void drawGrid(Graphics g) {
-		System.out.println("at least this went");
+		//System.out.println("at least this went");
 		for (int row = 0; row <= 12; row++) {
 			g.setColor(Color.BLACK);
 			g.drawLine(X_GRID_OFFSET,

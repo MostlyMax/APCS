@@ -136,7 +136,7 @@ public class Game{
 		player.turn = true;
 		//System.out.println("mhos");
 		for (Mho mhoMove : gameBoard.getMhoList()) {
-			System.out.println("ping");
+			//System.out.println("ping");
 			if (!(mhoMove.mhoDead)) mhoMove.moveMho(gameBoard, player);
 			gameBoard.showBoard();
 			
